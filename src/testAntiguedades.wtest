@@ -1,0 +1,42 @@
+import antiguedades.*
+import articulos.*
+
+describe "Casa de Antiguedades" {
+	
+	test "Agregar antiguedad a la casa de antiguedades" {
+		casaDeAntiguedades.adquirirAntiguedad(camperaMalvinas)
+		assert.equals(1, casaDeAntiguedades.cantidadDeAntiguedades())
+	}
+	
+	test "Agregar lote" {
+		casaDeAntiguedades.adquirirLote([pinturaVanGoh, mesaRatona, camperaMalvinas])
+		assert.equals(3, casaDeAntiguedades.cantidadDeAntiguedades())
+	}
+	
+	test "Busca si hay el articulo mesa ratona en la casa de antiguedades" {
+		casaDeAntiguedades.adquirirAntiguedad(mesaRatona)
+		assert.that(casaDeAntiguedades.hayAntiguedad(mesaRatona))
+	}
+	
+	test "Busca la ultima primera adquision de la casa de antiguedades" {
+		casaDeAntiguedades.adquirirLote([pinturaVanGoh, mesaRatona, camperaMalvinas])
+		assert.equals(camperaMalvinas, casaDeAntiguedades.ultimaAntiguedad())
+	}
+	
+	test "Busca si el articulo dado es muy antiguo" {
+		casaDeAntiguedades.adquirirAntiguedad(pinturaVanGoh)
+		assert.that(casaDeAntiguedades.antiguedadAntigua(pinturaVanGoh))
+	}
+	
+	test "Restaura una antiguedad dada si esta en mal estado" {
+		casaDeAntiguedades.adquirirAntiguedad(camperaMalvinas)
+		casaDeAntiguedades.restaurarAntiguedad(0)
+		assert.notThat(camperaMalvinas.enMalEstado())
+	}
+	
+	test "Vender todas las antiguedades" {
+		casaDeAntiguedades.adquirirLote([pinturaVanGoh, mesaRatona, camperaMalvinas])
+		casaDeAntiguedades.venderTodo()
+		assert.equals(0, casaDeAntiguedades.cantidadDeAntiguedades())
+	}
+}
